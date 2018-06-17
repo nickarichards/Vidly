@@ -21,6 +21,7 @@ namespace Vidly.Controllers
     //            return RedirectToAction("Index", "Home", new { Page = 1, sortBy = "New" });
         }
 
+        [Route("movies/released/{year}/{month}/{month:regex(\\d{2}):range(1, 12)}")]
         public ActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
