@@ -9,35 +9,21 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies
+        // GET: Movies/Random
         public ActionResult Random()
         {
-            var movie = new Movie() { Name = "Shrek!" };
+                var movie = new Movie() { Name = "Shrek!" };
 
-            return View(movie);
-//            return Content("Hello world!");
-//            return HttpNotFound();        }
-//            return new EmptyResult();
-//            return RedirectToAction("Index", "Home", new { Page = 1, sortBy = "New" });
+                return View(movie);
+    //            return Content("Hello world!");
+    //            return HttpNotFound();        }
+    //            return new EmptyResult();
+    //            return RedirectToAction("Index", "Home", new { Page = 1, sortBy = "New" });
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult ByReleaseDate(int year, int month)
         {
-            return Content("id=" + id);
+            return Content(year + "/" + month);
         }
-
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
-
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
-
-
-        }
-
     }
 }
