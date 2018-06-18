@@ -7,12 +7,18 @@ namespace Vidly.Migrations
     {
         public override void Up()
         {
-            RenameTable(name: "dbo.MemershipTypes", newName: "MembershipTypes");
-            DropForeignKey("dbo.Customers", "MemershipType_Id", "dbo.MemershipTypes");
-            DropIndex("dbo.Customers", new[] { "MemershipType_Id" });
-            DropColumn("dbo.Customers", "MembershipTypeId");
-            RenameColumn(table: "dbo.Customers", name: "MemershipType_Id", newName: "MembershipTypeId");
-            AlterColumn("dbo.Customers", "MembershipTypeId", c => c.Byte(nullable: false));
+            CreateTable(
+                    "dbo.MembershipTypes",
+                    c => new
+                    {
+                        Id = c.Byte(nullable: false),
+                        SignUpFee = c.Short(nullable: false),
+                        DurationInMonths = c.Byte(nullable: false),
+                        DiscountRate = c.Byte(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            AddColumn("dbo.Customers", "MembershipTypeId", c => c.Byte(nullable: false));
             CreateIndex("dbo.Customers", "MembershipTypeId");
             AddForeignKey("dbo.Customers", "MembershipTypeId", "dbo.MembershipTypes", "Id", cascadeDelete: true);
         }
@@ -21,12 +27,8 @@ namespace Vidly.Migrations
         {
             DropForeignKey("dbo.Customers", "MembershipTypeId", "dbo.MembershipTypes");
             DropIndex("dbo.Customers", new[] { "MembershipTypeId" });
-            AlterColumn("dbo.Customers", "MembershipTypeId", c => c.Byte());
-            RenameColumn(table: "dbo.Customers", name: "MembershipTypeId", newName: "MemershipType_Id");
-            AddColumn("dbo.Customers", "MembershipTypeId", c => c.Byte(nullable: false));
-            CreateIndex("dbo.Customers", "MemershipType_Id");
-            AddForeignKey("dbo.Customers", "MemershipType_Id", "dbo.MemershipTypes", "Id");
-            RenameTable(name: "dbo.MembershipTypes", newName: "MemershipTypes");
+            DropColumn("dbo.Customers", "MembershipTypeId");
+            DropTable("dbo.MembershipTypes");
         }
     }
 }
