@@ -21,6 +21,12 @@ namespace Vidly.Controllers
             _context.Dispose();
         }
 
+        [HttpPost]
+        public ActionResult Create(Customer customer)
+        {
+            return View();
+        }
+        
         public ActionResult New()
         {
 
