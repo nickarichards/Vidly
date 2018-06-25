@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Vidly.Migrations;
 using Vidly.Models;
 using Vidly.Models.ViewModels;
@@ -25,6 +26,7 @@ namespace Vidly.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles=RoleName.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
             if (!ModelState.IsValid)
@@ -88,6 +90,7 @@ namespace Vidly.Controllers
             return View(movies);
         }
 
+        [Authorize(Roles=RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(c => c.Id == id);
