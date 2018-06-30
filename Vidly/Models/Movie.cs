@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Profile;
 
 namespace Vidly.Models
 {
@@ -31,6 +32,10 @@ namespace Vidly.Models
         [Range(1,20)]
         [Display(Name = "Number In Stock")]
         public byte NumberInStock { get; set; }
+
+        [Display(Name = "Number Available")]
+        public byte NumberAvailable { get; set; }   
+
     }
 
 
