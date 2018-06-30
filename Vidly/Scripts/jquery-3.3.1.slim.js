@@ -1291,12 +1291,12 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// The type and name attributes are restricted during .innerHTML assignment
 			var input = document.createElement("input");
 			input.setAttribute( "type", "hidden" );
-			el.appendChild( input ).setAttribute( "name", "D" );
+			el.appendChild( input ).setAttribute( "customers", "D" );
 
 			// Support: IE8
 			// Enforce case-sensitivity of name attribute
 			if ( el.querySelectorAll("[name=d]").length ) {
-				rbuggyQSA.push( "name" + whitespace + "*[*^$|!~]?=" );
+				rbuggyQSA.push( "customers" + whitespace + "*[*^$|!~]?=" );
 			}
 
 			// FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
@@ -2721,10 +2721,10 @@ if ( !assert(function( el ) {
 // Use defaultValue in place of getAttribute("value")
 if ( !support.attributes || !assert(function( el ) {
 	el.innerHTML = "<input/>";
-	el.firstChild.setAttribute( "value", "" );
-	return el.firstChild.getAttribute( "value" ) === "";
+	el.firstChild.setAttribute( "name", "" );
+	return el.firstChild.getAttribute( "name" ) === "";
 }) ) {
-	addHandle( "value", function( elem, name, isXML ) {
+	addHandle( "name", function( elem, name, isXML ) {
 		if ( !isXML && elem.nodeName.toLowerCase() === "input" ) {
 			return elem.defaultValue;
 		}
@@ -4841,7 +4841,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 	// `name` and `type` must use .setAttribute for WWA (#14901)
 	input.setAttribute( "type", "radio" );
 	input.setAttribute( "checked", "checked" );
-	input.setAttribute( "name", "t" );
+	input.setAttribute( "customers", "t" );
 
 	div.appendChild( input );
 
@@ -7185,7 +7185,7 @@ jQuery.fn.extend( {
 
 				if ( hooks &&
 					"get" in hooks &&
-					( ret = hooks.get( elem, "value" ) ) !== undefined
+					( ret = hooks.get( elem, "name" ) ) !== undefined
 				) {
 					return ret;
 				}
@@ -7235,7 +7235,7 @@ jQuery.fn.extend( {
 			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
 
 			// If set returns undefined, fall back to normal setting
-			if ( !hooks || !( "set" in hooks ) || hooks.set( this, val, "value" ) === undefined ) {
+			if ( !hooks || !( "set" in hooks ) || hooks.set( this, val, "name" ) === undefined ) {
 				this.value = val;
 			}
 		} );
@@ -7247,7 +7247,7 @@ jQuery.extend( {
 		option: {
 			get: function( elem ) {
 
-				var val = jQuery.find.attr( elem, "value" );
+				var val = jQuery.find.attr( elem, "name" );
 				return val != null ?
 					val :
 
@@ -7344,7 +7344,7 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 	};
 	if ( !support.checkOn ) {
 		jQuery.valHooks[ this ].get = function( elem ) {
-			return elem.getAttribute( "value" ) === null ? "on" : elem.value;
+			return elem.getAttribute( "name" ) === null ? "on" : elem.value;
 		};
 	}
 } );

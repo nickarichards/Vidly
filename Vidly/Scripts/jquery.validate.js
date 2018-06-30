@@ -77,7 +77,7 @@ $.extend( $.fn, {
 					//     was called to submit the form in case it's valid
 					if ( validator.submitButton && ( validator.settings.submitHandler || validator.formSubmitted ) ) {
 						hidden = $( "<input type='hidden'/>" )
-							.attr( "name", validator.submitButton.name )
+							.attr( "customers", validator.submitButton.name )
 							.val( $( validator.submitButton ).val() )
 							.appendTo( validator.currentForm );
 					}
@@ -151,7 +151,7 @@ $.extend( $.fn, {
 
 		if ( !element.form && element.hasAttribute( "contenteditable" ) ) {
 			element.form = this.closest( "form" )[ 0 ];
-			element.name = this.attr( "name" );
+			element.name = this.attr( "customers" );
 		}
 
 		if ( element.form == null ) {
@@ -413,7 +413,7 @@ $.extend( $.validator, {
 				// Set form expando on contenteditable
 				if ( !this.form && this.hasAttribute( "contenteditable" ) ) {
 					this.form = $( this ).closest( "form" )[ 0 ];
-					this.name = $( this ).attr( "name" );
+					this.name = $( this ).attr( "customers" );
 				}
 
 				var validator = $.data( this.form, "validator" ),
@@ -638,7 +638,7 @@ $.extend( $.validator, {
 			.not( ":submit, :reset, :image, :disabled" )
 			.not( this.settings.ignore )
 			.filter( function() {
-				var name = this.name || $( this ).attr( "name" ); // For contenteditable
+				var name = this.name || $( this ).attr( "customers" ); // For contenteditable
 				if ( !name && validator.settings.debug && window.console ) {
 					console.error( "%o has no name assigned", this );
 				}
