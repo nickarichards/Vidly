@@ -36,7 +36,56 @@
 
 }
 
+
+<hr />
+<h2>Current Rentals</h2>
+@Html.Partial("_CustomerRentals")
+
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#rentals").DataTable({
+                ajax: {
+                    url: "/api/customerrentals/" + @Model.Customer.Id,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "movie.name",
+                    },
+                    {
+                        data: "dateRented"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-return' data-id=" + data + ">Return</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#rentals").on("click", ".js-return", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to return this movie?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/customerrentals/" + $(button).attr("data-id"),
+                            method: "PUT",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+
 }
+
